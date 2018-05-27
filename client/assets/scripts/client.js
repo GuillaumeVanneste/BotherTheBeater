@@ -24,6 +24,29 @@ for (let i = 0; i < $buttons.length; i++) {
     });
 }
 
+// Define the malus received from the server
+socket.on('malus', (malus) => {
+    switch(malus){
+        //malus 1 -> Reduce the gamma of the screen
+        case 'gamma':
+            const $gamma = document.createElement('div')
+            $gamma.classList.add('gamma')
+            $malus.appendChild($gamma)
+            window.setTimeout(function () {$malus.removeChild($gamma)}, 5000) // Remove the malus
+            break
+
+        //malus 2 -> change the position of bubbles
+        case 'switch':
+            context.rotate(90 * (Math.PI / 180))
+            break
+
+        //malus 3 -> increase the speed of the music
+        case 'speed':
+            timerSpeed = 5
+            break
+    }
+})
+
 /**
  * Messages
  */
