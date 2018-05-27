@@ -1,6 +1,28 @@
 // set-up a connection between the client and the server
 const socket = io.connect()
 
+/**
+ * Malus
+ */
+const $buttons = document.querySelectorAll("button")
+let malus = ""
+
+// For each button of $buttons
+for (let i = 0; i < $buttons.length; i++) {
+    const button = $buttons[i]
+    // Player send a malus
+    button.addEventListener("mousedown", () => {
+        malus = button.value
+        button.disabled = true
+        window.setTimeout(function () {button.disabled = false}, 5000 * (i + 2)) // Set a cooldown of each malus
+
+        // cooldown timer
+
+
+        // Send the malus information to the server
+        socket.emit('malus', malus)
+    });
+}
 
 /**
  * Messages
