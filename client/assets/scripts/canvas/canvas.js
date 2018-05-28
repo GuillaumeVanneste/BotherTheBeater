@@ -283,7 +283,6 @@ const loop = () =>
     clear()
     draw()
     $score.textContent = score
-    console.log(gameTime)
 }
 loop()
 

@@ -1,10 +1,12 @@
 // set-up a connection between the client and the server
 const socket = io.connect()
+let isReady = false
 
 /**
  * Malus
  */
-const $buttons = document.querySelectorAll("button")
+const $malus = document.querySelector('.malus')
+const $buttons = $malus.querySelectorAll("button")
 let malus = ""
 
 // For each button of $buttons

@@ -3,3 +3,27 @@ body{
     padding: 0;
     overflow: hidden;
 }
+
+.malus .buttons {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    top: 20px;
+    right: 20px;
+    width: 500px;
+    height: 200px;
+    background: #000;
+
+}
+
+.malus button {
+    width: 100px;
+    height: 100px;
+    background: #000000;
+    color: #fff;
+    line-height: 0;
+    border: 1px solid #ffffff;
+    border-radius: 100%;
+    cursor: pointer;
+}
