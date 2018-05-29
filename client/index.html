@@ -1,27 +1,96 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <mata name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"></mata>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
     <title>Bother The Beater</title>
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="assets/styles/reset.css">
+    <link rel="stylesheet" href="assets/styles/materialize.min.css">
     <link rel="stylesheet" href="assets/styles/style.css">
+
+    <!-- Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 </head>
 <body>
-    <form action="/submit" method="post">
-        <div>
-            <label for="name">Username</label>
-            <input id="name" name="name" type="text" class="validate" autocomplete="off">
-        </div>
-        <div>
-            <label for="room">Room name</label>
-            <input id="room" name="room" type="text" class="validate" autocomplete="off">
-        </div>
+    <main class="main">
+        <h1 class="title orange-text">Bother The Beater</h1>
+        <div class="container">
+            <div class="row valign-wrapper">
+                <div class="col s12 m5 center description">
+                    <p>
+                        Bother The Beater is a cooperative and confrontation of two
+                        players. The goal is to press the key with the good timing while the
+                        second player is trying to disturb the beater with some malus.
+                        After a minute, the roles exchange. Try to get the best cumulated score.
+                    </p>
+                </div>
 
-        <button type="submit">Submit</button>
-    </form>
+                <div class="col s12 m5 offset-m2 section">
+                    <h2>Join a room</h2>
+                    <form action="/submit" method="post">
+                        <div class="input-field">
+                            <input id="name" name="name" type="text" class="validate" autocomplete="off">
+                            <label for="name">Username</label>
+                        </div>
+                        <div class="input-field">
+                            <input id="room" name="room" type="text" class="validate" autocomplete="off">
+                            <label for="room">Room name</label>
+                        </div>
+                        <button class="waves-effect waves-light btn-small orange" type="submit">Join the room</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row valign-wrapper">
+                <div class="col s12 m5 section keysInstruction">
+                    <h2>Keys</h2>
+                    <div class="row center keys">
+                        <div class="col m2"><span>A</span></div>
+                        <div class="col m2"><span>Z</span></div>
+                        <div class="col m2"><span>E</span></div>
+                        <div class="col m2"><span>R</span></div>
+                        <div class="col m2"><span>T</span></div>
+                    </div>
+                </div>
+
+                <div class="col s12 m5 offset-m2 section">
+                    <h2>Current Room</h2>
+                    <table class="centered">
+                        <thead>
+                            <tr>
+                                <th>Room Name</th>
+                                <th><i class="material-icons">sentiment_very_satisfied</i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Bruno's room</td>
+                                <td class="red-text">Full</td>
+                                <td><a class="waves-effect waves-light btn-small orange">Join</a></td>
+                            </tr>
+                            <tr>
+                                <td>Best room</td>
+                                <td class="orange-text">1 / 2</td>
+                                <td><a class="waves-effect waves-light btn-small orange">Join</a></td>
+                            </tr>
+                            <tr>
+                                <td>Empty room</td>
+                                <td class="green-text">0 / 2</td>
+                                <td><a class="waves-effect waves-light btn-small orange">Join</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/scripts/materialize/jquery-3.3.1.min.js"></script>
+    <script src="assets/scripts/materialize/materialize.min.js"></script>
 </body>
 </html>
