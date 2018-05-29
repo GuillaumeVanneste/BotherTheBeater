@@ -84,5 +84,5 @@ socket.on('ready', () => {
 // When the client get an error from the server
 socket.on('err', (errorMessage) => {
     window.alert('Error message : ' + errorMessage) // Write the error message
-    location.href = 'index.html' // Return to the connection page
+    location.href = '/' // Return to the connection page
 })
