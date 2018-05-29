@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const server = require('http').Server(app)
 const bodyParser = require('body-parser')
+const {isRealString} = require('./utilities/validation')
 let name = ""
 let room = ""
 
@@ -32,6 +33,11 @@ const io = require('socket.io')(server,{})
 io.sockets.on('connection', (socket) => {
 
     // Once a client has connected, he join a room
+    // If client forget to refer a name or a room
+    if (!isRealString(name) || !isRealString(room)) {
+        socket.emit('err', 'Username or room name is missing !') // Send an error to the client
+        return false // Close the session
+    }
 
     // Check how many people are in a room
     const clientsInRoom = io.nsps['/'].adapter.rooms[room] // Array of all clients in the room
