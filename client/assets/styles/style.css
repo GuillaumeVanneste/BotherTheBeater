@@ -28,6 +28,7 @@ h1.title {
 }
 
 .container .description p {
+    margin-bottom: 45px;
     line-height: 20px;
 }
 
@@ -36,14 +37,19 @@ h1.title {
 }
 
 .container .keysInstruction .keys div {
-    background: #fff;
-    color: #000;
     border-radius: 30%;
-    height: 50px;
+    height: 4vw;
 }
 
+.container .keysInstruction .keys div:nth-child(1) {border: 2px solid green; background: rgba(0, 128, 0, 0.2)}
+.container .keysInstruction .keys div:nth-child(2) {border: 2px solid red; background: rgba(255, 0, 0, 0.2)}
+.container .keysInstruction .keys div:nth-child(3) {border: 2px solid yellow; background: rgba(255, 255, 0, 0.2)}
+.container .keysInstruction .keys div:nth-child(4) {border: 2px solid blue; background: rgba(0, 0, 255, 0.2)}
+.container .keysInstruction .keys div:nth-child(5) {border: 2px solid orange; background: rgba(255, 165, 0, 0.2)}
+
 .container .keysInstruction .keys span {
-    line-height: 36px;
+    font-size: 1.5vw;
+    line-height: 3.8vw;
 }
 
 .malus .buttons {
@@ -76,3 +82,5 @@ canvas {
     left: 0;
     overflow: hidden;
 }
+
+@media only screen and (max-width: 600px) { .row.valign-wrapper { display: inherit; } }
