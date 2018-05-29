@@ -1,7 +1,49 @@
 body{
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    background: #262626;
+    color: #fff;
+}
+
+h1.title {
+    padding-left: 30px;
+}
+
+.container .section {
+    position: relative;
+    padding: 20px 35px 30px;
+    border: 4px solid #fff;
+    border-radius: 25px;
+    margin-bottom: 45px;
+}
+
+.container h2 {
+    position: absolute;
+    top: -20px;
+    text-align: center;
+    font-size: 28px;
+    margin-top: 0;
+    padding: 0 25px;
+    background: #262626;
+}
+
+.container .description p {
+    line-height: 20px;
+}
+
+.container .keysInstruction .keys {
+    margin: 0;
+}
+
+.container .keysInstruction .keys div {
+    background: #fff;
+    color: #000;
+    border-radius: 30%;
+    height: 50px;
+}
+
+.container .keysInstruction .keys span {
+    line-height: 36px;
 }
 
 .malus .buttons {
@@ -26,4 +68,11 @@ body{
     border: 1px solid #ffffff;
     border-radius: 100%;
     cursor: pointer;
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
 }
