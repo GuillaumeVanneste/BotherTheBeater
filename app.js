@@ -17,7 +17,11 @@ app.get('/', (req, res) => {
 app.post('/submit', (req, res) => {
     name = req.body.name
     room = req.body.room
-    res.redirect(room)
+    if(room === '') {
+        res.redirect('/')
+    } else {
+        res.redirect(room)
+    }
 })
 
 app.get('/:room', (req, res) => {
