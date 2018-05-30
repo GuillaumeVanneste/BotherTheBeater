@@ -184,11 +184,13 @@ const orangeEnd = {
 
 // FUNCTIONS
 
-
+notes = musics[0]
 
 // Set timer
 const timer = () => {
-    gameTime += 0.01
+    if(isReady) {
+        gameTime += 0.01
+    }
 }
 window.setInterval(timer, timerSpeed)
 
@@ -222,19 +224,6 @@ const createNotes = () => {
     }
 }
 createNotes()
-
-const updateNotes = () => {
-    for(const note of notes) {
-        if(note.time < gameTime) {
-            note.x += 12.25
-        }
-        if (note.x >= center.x + endRadius * 2) { // Missed
-            score--
-            missed++
-            notes.shift()
-        }
-    }
-}
 
 window.addEventListener('keydown', (event) => {
     switch (notes[0].color) {
