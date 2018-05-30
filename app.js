@@ -3,8 +3,9 @@ const app = express()
 const server = require('http').Server(app)
 const bodyParser = require('body-parser')
 const {isRealString} = require('./utilities/validation')
-let name = ""
-let room = ""
+const currentRooms = []
+let name = null
+let room = null
 
 app.use(express.static(__dirname + '/client/'))
 app.use(bodyParser.json()); // support json encoded bodies
@@ -25,7 +26,7 @@ app.post('/submit', (req, res) => {
 })
 
 app.get('/:room', (req, res) => {
-	res.sendFile(__dirname + '/client/game.html')
+    res.sendFile(__dirname + '/client/game.html')
 })
 
 
@@ -37,30 +38,45 @@ const io = require('socket.io')(server,{})
 io.sockets.on('connection', (socket) => {
 
     // Once a client has connected, he join a room
-    // If client forget to refer a name or a room
-    if (!isRealString(name) || !isRealString(room)) {
-        socket.emit('err', 'Username or room name is missing !') // Send an error to the client
-        return false // Close the session
-    }
+    socket.on('room', () => {
 
-    // Check how many people are in a room
-    const clientsInRoom = io.nsps['/'].adapter.rooms[room] // Array of all clients in the room
-    const numClients = clientsInRoom === undefined ? 0 : Object.keys(clientsInRoom.sockets).length // Count number of clients
-    switch (numClients) {
-        case 0: // first client -> create the room
-            socket.join(room) // Client join the room
-            socket.emit('created', room, name)
-            break
-        case 1: // Seco²nd client -> join the room
-            socket.join(room) // Client join the room
-            socket.in(room).broadcast.emit('join', name) // Send message to the client already in the room
-            socket.emit('joined', room, name) // Send message to the client who joined
-            io.sockets.in(room).emit('ready') // Send a ready message to all clients of the room
-            break
-        case 2: // Already 2 clients in the room -> the room is full
-            socket.emit('err', 'The room ' + room + ' is full') // Send an error to the client
-            break
-    }
+        for(const room in io.sockets.adapter.rooms) {
+            if (room !== socket.id && !(currentRooms.includes(room)))
+                currentRooms.push(room)
+        }
+
+        // If client forget to refer a name or a room
+        if (!isRealString(name)) {
+            socket.emit('err', 'Username is missing !') // Send an error to the client
+            return false // Close the session
+        } else if(!isRealString(room)) {
+            socket.emit('err', 'Room name is missing !') // Send an error to the client
+            return false // Close the session
+        }
+
+        // Check how many people are in a room
+        const clientsInRoom = io.nsps['/'].adapter.rooms[room] // Array of all clients in the room
+        const numClients = clientsInRoom === undefined ? 0 : Object.keys(clientsInRoom.sockets).length // Count number of clients
+        switch (numClients) {
+            case 0: // first client -> create the room
+                socket.join(room) // Client join the room
+                socket.emit('created', room, name)
+                break
+            case 1: // Seco²nd client -> join the room
+                socket.join(room) // Client join the room
+                socket.in(room).broadcast.emit('join', name) // Send message to the client already in the room
+                socket.emit('joined', room, name) // Send message to the client who joined
+                io.sockets.in(room).emit('ready') // Send a ready message to all clients of the room
+                break
+            case 2: // Already 2 clients in the room -> the room is full
+                socket.emit('err', 'The room ' + room + ' is full') // Send an error to the client
+                break
+        }
+    })
+
+    socket.emit('browser', (currentRooms))
+    console.log(currentRooms);  // should be ['Lobby', 'test'];
+
     // Emit the malus to the other player in the same romm
     socket.on('malus', (malus) => {
         socket.in(room).broadcast.emit('malus', malus)
@@ -69,6 +85,8 @@ io.sockets.on('connection', (socket) => {
 
     // Lose socket connection
     socket.on('disconnect', () => {
+        socket.leave(room)
+        socket.emit('err', "you have left the room")
         console.log("user disconnected")
     })
 })
