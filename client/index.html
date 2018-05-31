@@ -16,6 +16,27 @@
 </head>
 <body>
     <main class="main">
+
+        <!-- Modal Structure -->
+        <div id="modal1" class="modal">
+            <div class="modal-content">
+                <h2>Joining the room : </h2>
+                <form action="/submit" method="post">
+                    <div class="input-field">
+                        <input id="name" name="name" type="text" class="validate" autocomplete="off">
+                        <label for="name">Username</label>
+                    </div>
+                    <div class="input-field hide">
+                        <input id="room" name="room" type="text" class="validate modalRoom" autocomplete="off" value="">
+                        <label for="room">Room name</label>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="modal-close waves-effect waves-green btn-flat" type="submit">Join the room</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <h1 class="title orange-text">Bother The Beater</h1>
         <div class="container">
             <div class="row valign-wrapper">
