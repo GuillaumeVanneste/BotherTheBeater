@@ -8,3 +8,16 @@ const updateEnd = () => {
     ]
 }
 
+const updateNotes = () => {
+    for(const note of notes) {
+        if(note.time < gameTime) {
+            note.x += 12.25
+        }
+        if (note.x >= center.x + endRadius * 2) { // Missed
+            score--
+            missed++
+            notes.shift()
+        }
+    }
+}
+

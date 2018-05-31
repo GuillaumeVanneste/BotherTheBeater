@@ -34,6 +34,7 @@ let tooSoon = 0
 let tooLate = 0
 let missed = 0
 let timerSpeed = 10
+const $audio = document.querySelector('audio')
 
 const musics = [
     [
@@ -190,6 +191,7 @@ notes = musics[0]
 const timer = () => {
     if(isReady) {
         gameTime += 0.01
+        $audio.play()
     }
 }
 window.setInterval(timer, timerSpeed)

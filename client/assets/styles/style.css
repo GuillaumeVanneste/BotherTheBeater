@@ -83,4 +83,12 @@ canvas {
     overflow: hidden;
 }
 
+.roomsTable tr td:nth-child(2) {
+    color: green;
+}
+
+.main .modal {
+    color: black;
+}
+
 @media only screen and (max-width: 600px) { .row.valign-wrapper { display: inherit; } }
