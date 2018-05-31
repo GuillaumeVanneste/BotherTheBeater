@@ -38,12 +38,7 @@ const io = require('socket.io')(server,{})
 io.sockets.on('connection', (socket) => {
 
     // Once a client has connected, he join a room
-    socket.on('room', () => {
-
-        for(const room in io.sockets.adapter.rooms) {
-            if (room !== socket.id && !(currentRooms.includes(room)))
-                currentRooms.push(room)
-        }
+    socket.on('room', (room) => {
 
         // If client forget to refer a name or a room
         if (!isRealString(name)) {
@@ -60,6 +55,8 @@ io.sockets.on('connection', (socket) => {
         switch (numClients) {
             case 0: // first client -> create the room
                 socket.join(room) // Client join the room
+                if(!currentRooms.includes(room))
+                    currentRooms.push(room)
                 socket.emit('created', room, name)
                 break
             case 1: // Seco²nd client -> join the room
@@ -72,10 +69,18 @@ io.sockets.on('connection', (socket) => {
                 socket.emit('err', 'The room ' + room + ' is full') // Send an error to the client
                 break
         }
+
+        // Lose socket connection
+        socket.on('disconnect', () => {
+            socket.leave(room)
+                currentRooms.splice(room)
+            console.log("user disconnected")
+        })
     })
 
+    console.log("new current room : " + currentRooms)
     socket.emit('browser', (currentRooms))
-    console.log(currentRooms);  // should be ['Lobby', 'test'];
+    console.log("currentRooms : " + currentRooms);  // should be ['Lobby', 'test'];
 
     // Emit the malus to the other player in the same romm
     socket.on('malus', (malus) => {
@@ -85,7 +90,6 @@ io.sockets.on('connection', (socket) => {
 
     // Lose socket connection
     socket.on('disconnect', () => {
-        socket.leave(room)
         socket.emit('err', "you have left the room")
         console.log("user disconnected")
     })
