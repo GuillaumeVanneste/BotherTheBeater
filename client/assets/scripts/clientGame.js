@@ -1,8 +1,10 @@
 // set-up a connection between the client and the server
 const socket = io({transports: ['websocket'], upgrade: false})
 let isReady = false
+const room = window.location.pathname.slice(1)
 
-socket.emit('room')
+
+socket.emit('room', room)
 
 /**
  * Malus
