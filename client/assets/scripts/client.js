@@ -5,6 +5,7 @@ const $modalRoom = document.querySelector('.modalRoom')
 
 socket.on("updateBrowser", (currentRooms) => {
     console.log(currentRooms)
+    $roomsTable.innerHTML = ""
     if(currentRooms.length === 0) {
         const row = $roomsTable.insertRow(0)
         const cell1 = row.insertCell(0)
