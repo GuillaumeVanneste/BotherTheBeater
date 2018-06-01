@@ -75,15 +75,18 @@ io.sockets.on('connection', (socket) => {
             socket.in(room).broadcast.emit('malus', malus)
             socket.in(room).emit('message', 'You got a malus !')
         })
-    })
 
-    socket.on('leaveRoom', (room) => {
-        currentRooms.splice(currentRooms.indexOf(room), 1)
+        socket.on('leaveRoom', (room) => {
+            if(numClients === 0)
+                currentRooms.splice(currentRooms.indexOf(room), 1)
+        })
     })
 
     socket.on('askBrowser', () => {
         socket.emit('updateBrowser', (currentRooms))
     })
+
+    socket.emit('updateBrowser', (currentRooms))
 
     // Lose socket connection
     socket.on('disconnect', () => {
