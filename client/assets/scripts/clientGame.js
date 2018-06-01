@@ -6,6 +6,10 @@ const room = window.location.pathname.slice(1)
 
 socket.emit('room', room)
 
+window.addEventListener('beforeunload', () => {
+    socket.emit('leaveRoom', room)
+})
+
 /**
  * Malus
  */
