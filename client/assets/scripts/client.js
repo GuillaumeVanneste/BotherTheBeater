@@ -4,7 +4,6 @@ const $roomsTable = document.querySelector('.roomsTable')
 const $modalRoom = document.querySelector('.modalRoom')
 
 socket.on("updateBrowser", (currentRooms) => {
-    console.log(currentRooms)
     $roomsTable.innerHTML = ""
     if(currentRooms.length === 0) {
         const row = $roomsTable.insertRow(0)
@@ -26,7 +25,6 @@ socket.on("updateBrowser", (currentRooms) => {
             })
         }
     }
-    console.log("Browser updated")
 })
 
 window.setInterval(function () {socket.emit('askBrowser')}, 1000)

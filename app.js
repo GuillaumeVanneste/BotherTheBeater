@@ -69,25 +69,20 @@ io.sockets.on('connection', (socket) => {
                 socket.emit('err', 'The room ' + room + ' is full') // Send an error to the client
                 break
         }
+
+        // Emit the malus to the other player in the same romm
+        socket.on('malus', (room, malus) => {
+            socket.in(room).broadcast.emit('malus', malus)
+            socket.in(room).emit('message', 'You got a malus !')
+        })
     })
 
-        socket.on('leaveRoom', (room) => {
+    socket.on('leaveRoom', (room) => {
         currentRooms.splice(currentRooms.indexOf(room), 1)
-        console.log("user left = " + room)
     })
 
     socket.on('askBrowser', () => {
         socket.emit('updateBrowser', (currentRooms))
-    })
-
-    console.log("new current room : " + currentRooms)
-    socket.emit('updateBrowser', (currentRooms))
-    console.log("currentRooms : " + currentRooms);  // should be ['Lobby', 'test'];
-
-    // Emit the malus to the other player in the same romm
-    socket.on('malus', (room, malus) => {
-        socket.in(room).broadcast.emit('malus', malus)
-        socket.in(room).emit('message', 'You got a malus !')
     })
 
     // Lose socket connection
@@ -95,5 +90,3 @@ io.sockets.on('connection', (socket) => {
         console.log("user disconnected")
     })
 })
-
-console.log('server is up')
