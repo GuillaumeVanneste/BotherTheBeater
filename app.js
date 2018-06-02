@@ -71,7 +71,7 @@ io.sockets.on('connection', (socket) => {
         }
 
         // Emit the malus to the other player in the same romm
-        socket.on('malus', (room, malus) => {
+        socket.on('malus', (malus) => {
             socket.in(room).broadcast.emit('malus', malus)
             socket.in(room).emit('message', 'You got a malus !')
         })
