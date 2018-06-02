@@ -17,23 +17,50 @@ window.addEventListener('beforeunload', () => {
  */
 const $malus = document.querySelector('.malus')
 const $buttons = $malus.querySelectorAll("button")
-let malus = ""
+
 
 // For each button of $buttons
 for (let i = 0; i < $buttons.length; i++) {
     const button = $buttons[i]
+    let malus = ""
+    let cooldownTimer = null
+    let cooldownInterval = null
+    let antiCheatInterval = null
     // Player send a malus
-    button.addEventListener("mousedown", () => {
+    button.addEventListener("mouseup", () => {
         malus = button.value
         button.disabled = true
-        window.setTimeout(function () {button.disabled = false}, 5000 * (i + 2)) // Set a cooldown of each malus
+        cooldownTimer = 5 * (i + 1)
+        window.setTimeout(function () {button.disabled = false}, cooldownTimer * 1000) // Set a cooldown of each malus
 
         // cooldown timer
+        const cooldown = () => {
+            if(cooldownTimer > 0) {
+                button.innerHTML = cooldownTimer
+                cooldownTimer--
+            } else {
+                button.innerHTML = button.value
+                window.clearInterval(cooldownInterval)
+            }
+            console.log(cooldownInterval)
+        }
+        cooldown()
+        cooldownInterval = window.setInterval(cooldown, 1000)
 
+        const antiCheat = () => {
+            if(button.disabled === false && cooldownTimer > 0) {
+                button.disabled = true
+                console.log('YOU ARE CHEATING !')
+            } else {
+                console.log('You\'re not cheating')
+            }
+        }
+        antiCheat()
+        antiCheatInterval = window.setInterval(antiCheat, 500)
 
         // Send the malus information to the server
         socket.emit('malus', malus)
-    });
+    })
 }
 
 // Define the malus received from the server
