@@ -2,6 +2,7 @@
 const socket = io({transports: ['websocket'], upgrade: false})
 const $roomsTable = document.querySelector('.roomsTable')
 const $modalRoom = document.querySelector('.modalRoom')
+const $modalTitle = document.querySelector('.modalTitle')
 let allRooms = []
 
 socket.on("updateBrowser", (currentRooms) => {
@@ -20,10 +21,11 @@ socket.on("updateBrowser", (currentRooms) => {
                 const cell3 = row.insertCell(2)
                 cell1.innerHTML = currentRooms[i]
                 cell2.innerHTML = '1/2'
-                cell3.innerHTML = '<button type="sumbit" class="waves-effect waves-light btn-small orange modal-trigger" data-target="modal1">Join</button>'
+                cell3.innerHTML = '<button type="submit" class="waves-effect waves-light btn-small orange modal-trigger" data-target="modal1">Join</button>'
                 console.log("create rooms")
                 const triggerModal = cell3.querySelector('button')
                 triggerModal.addEventListener('mousedown', () => {
+                    $modalTitle.innerHTML = 'Joining ' + currentRooms[i]
                     $modalRoom.value = currentRooms[i]
                 })
             }

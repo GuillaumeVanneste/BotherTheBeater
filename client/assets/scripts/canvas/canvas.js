@@ -3,6 +3,7 @@ const $canvas = document.querySelector('canvas')
 const context = $canvas.getContext('2d')
 const $score = document.querySelector('.score')
 const center = {x: $canvas.width * 0.5, y: $canvas.height * 0.5} // Center of canvas
+let angle = 0
 
 // Resize
 const resize = () =>
