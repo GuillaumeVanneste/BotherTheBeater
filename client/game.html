@@ -7,20 +7,26 @@
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="assets/styles/reset.css">
+    <link rel="stylesheet" href="assets/styles/materialize.min.css">
     <link rel="stylesheet" href="assets/styles/style.css">
 </head>
 <body>
-    <div class="player2 controls malus">
-        <p>Press one of these button to send a malus to the other player !</p>
-        <div class="buttons">
-            <button type="button" value="gamma">Gamma</button>
-            <button type="button" value="rotate">Rotate</button>
-            <button type="button" value="speed">Speed</button>
-        </div>
-    </div>
-    <span class="score"></span>
-    <audio src="assets/musics/music1.mp3" controls></audio>
-    <canvas></canvas>
+    <main class="main game">
+            <div class="row player2 controls malus">
+                <div class="col s3 push-s9 section">
+                    <h2>Malus</h2>
+                    <p>Press one of these buttond to send a malus to the other player !</p>
+                    <div class="buttons">
+                        <button class="col s12 waves-effect waves-light btn orange" type="button" value="gamma">Gamma</button>
+                        <button class="col s12 waves-effect waves-light btn orange" type="button" value="rotate">Rotate</button>
+                        <button class="col s12 waves-effect waves-light btn orange" type="button" value="speed">Speed</button>
+                    </div>
+                </div>
+            </div>
+        <span class="score"></span>
+        <audio src="assets/musics/music1.mp3" controls></audio>
+        <canvas></canvas>
+    </main>
 
     <script src="assets/scripts/socket.io/socket.io.js"></script>
     <script src="assets/scripts/canvas/update.js"></script>

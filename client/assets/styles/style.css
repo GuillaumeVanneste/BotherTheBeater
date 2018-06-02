@@ -9,7 +9,7 @@ h1.title {
     padding-left: 30px;
 }
 
-.container .section {
+.main .section {
     position: relative;
     padding: 20px 35px 30px;
     border: 4px solid #fff;
@@ -17,7 +17,7 @@ h1.title {
     margin-bottom: 45px;
 }
 
-.container h2 {
+.main h2 {
     position: absolute;
     top: -20px;
     text-align: center;
@@ -27,63 +27,53 @@ h1.title {
     background: #262626;
 }
 
-.container .description p {
+.home .description p {
     margin-bottom: 45px;
     line-height: 20px;
 }
 
-.container .keysInstruction .keys {
+.home .keysInstruction .keys {
     margin: 0;
 }
 
-.container .keysInstruction .keys div {
+.home .keysInstruction .keys div {
     border-radius: 30%;
     height: 4vw;
 }
 
-.container .keysInstruction .keys div:nth-child(1) {border: 2px solid green; background: rgba(0, 128, 0, 0.2)}
-.container .keysInstruction .keys div:nth-child(2) {border: 2px solid red; background: rgba(255, 0, 0, 0.2)}
-.container .keysInstruction .keys div:nth-child(3) {border: 2px solid yellow; background: rgba(255, 255, 0, 0.2)}
-.container .keysInstruction .keys div:nth-child(4) {border: 2px solid blue; background: rgba(0, 0, 255, 0.2)}
-.container .keysInstruction .keys div:nth-child(5) {border: 2px solid orange; background: rgba(255, 165, 0, 0.2)}
+.home .keysInstruction .keys div:nth-child(1) {border: 2px solid green; background: rgba(0, 128, 0, 0.2)}
+.home .keysInstruction .keys div:nth-child(2) {border: 2px solid red; background: rgba(255, 0, 0, 0.2)}
+.home .keysInstruction .keys div:nth-child(3) {border: 2px solid yellow; background: rgba(255, 255, 0, 0.2)}
+.home .keysInstruction .keys div:nth-child(4) {border: 2px solid blue; background: rgba(0, 0, 255, 0.2)}
+.home .keysInstruction .keys div:nth-child(5) {border: 2px solid orange; background: rgba(255, 165, 0, 0.2)}
 
-.container .keysInstruction .keys span {
+.home .keysInstruction .keys span {
     font-size: 1.5vw;
     line-height: 3.8vw;
 }
 
-.malus .buttons {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    top: 20px;
-    right: 20px;
-    width: 500px;
-    height: 200px;
-    background: #000;
-
+.game .malus {
+    margin-top: 50px;
+    margin-right: 50px;
 }
 
-.malus button {
-    width: 100px;
-    height: 100px;
-    background: #000000;
+.game .malus p {
+    margin-bottom: 15px;
+}
+
+.game .malus button {
+    margin-bottom: 10px;
     color: #fff;
-    line-height: 0;
-    border: 1px solid #ffffff;
-    border-radius: 100%;
     cursor: pointer;
     z-index: 1;
 }
 
-.malus button:disabled {
+.game .malus button:disabled {
     color: grey;
-    border-color: gray;
     cursor: default;
 }
 
-.malus .gamma {
+.game .malus .gamma {
     position: absolute;
     top: 0;
     left: 0;
@@ -93,11 +83,11 @@ h1.title {
     z-index: -1;
 }
 
-audio {
+.game audio {
     z-index: 1;
 }
 
-canvas {
+.game canvas {
     position: absolute;
     top: 0;
     left: 0;
@@ -105,11 +95,11 @@ canvas {
     z-index: -5;
 }
 
-.roomsTable tr td:nth-child(2) {
+.home .roomsTable tr td:nth-child(2) {
     color: green;
 }
 
-.main .modal {
+.home .modal {
     color: black;
 }
 
