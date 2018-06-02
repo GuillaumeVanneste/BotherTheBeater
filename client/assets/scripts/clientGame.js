@@ -2,6 +2,8 @@
 const socket = io({transports: ['websocket'], upgrade: false})
 let isReady = false
 const room = window.location.pathname.slice(1)
+let myUsername = ''
+let player = ''
 
 
 socket.emit('room', room)
@@ -46,8 +48,8 @@ socket.on('malus', (malus) => {
             break
 
         //malus 2 -> change the position of bubbles
-        case 'switch':
-            context.rotate(90 * (Math.PI / 180))
+        case 'rotate':
+            angle += 90
             break
 
         //malus 3 -> increase the speed of the music
@@ -67,11 +69,15 @@ socket.on('connect', () => {
 // Received a message qhen the client create the room
 socket.on('created', (room, name) => {
     console.log('you\'ve created the room ' + room + ' as user ' + name)
+    myUsername = name
+    player = 'player1'
 })
 
 // Received a message qhen the client join the room
 socket.on('joined', (room, name) => {
     console.log('you\'ve joined the room ' + room + ' as user ' + name)
+    myUsername = name
+    player = 'player2'
 })
 
 // Received a message qhen the client join the room
