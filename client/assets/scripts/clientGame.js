@@ -15,9 +15,17 @@ window.addEventListener('beforeunload', () => {
 /**
  * Malus
  */
+const $player2Controls = document.querySelector('.player2.controls')
 const $malus = document.querySelector('.malus')
 const $buttons = $malus.querySelectorAll("button")
 
+const definePlayer = () => {
+    if(player === 'player1') {
+        $player2Controls.style = 'display: none;'
+    } else {
+        $player2Controls.style = 'display: block;'
+    }
+}
 
 // For each button of $buttons
 for (let i = 0; i < $buttons.length; i++) {
@@ -30,7 +38,7 @@ for (let i = 0; i < $buttons.length; i++) {
     button.addEventListener("mouseup", () => {
         malus = button.value
         button.disabled = true
-        cooldownTimer = 5 * (i + 1)
+        cooldownTimer = 5 * (i + 2)
         window.setTimeout(function () {button.disabled = false}, cooldownTimer * 1000) // Set a cooldown of each malus
 
         // cooldown timer
@@ -55,8 +63,7 @@ for (let i = 0; i < $buttons.length; i++) {
                 console.log('You\'re not cheating')
             }
         }
-        antiCheat()
-        antiCheatInterval = window.setInterval(antiCheat, 500)
+        window.setInterval(antiCheat, 500)
 
         // Send the malus information to the server
         socket.emit('malus', malus)
@@ -98,6 +105,7 @@ socket.on('created', (room, name) => {
     console.log('you\'ve created the room ' + room + ' as user ' + name)
     myUsername = name
     player = 'player1'
+    definePlayer()
 })
 
 // Received a message qhen the client join the room
@@ -105,6 +113,7 @@ socket.on('joined', (room, name) => {
     console.log('you\'ve joined the room ' + room + ' as user ' + name)
     myUsername = name
     player = 'player2'
+    definePlayer()
 })
 
 // Received a message qhen the client join the room
