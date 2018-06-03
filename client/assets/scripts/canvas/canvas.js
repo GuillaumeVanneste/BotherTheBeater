@@ -2,20 +2,9 @@
 const $canvas = document.querySelector('canvas')
 const context = $canvas.getContext('2d')
 const $score = document.querySelector('.score')
+const $scoreValue = $score.querySelector('.value')
 const center = {x: $canvas.width * 0.5, y: $canvas.height * 0.5} // Center of canvas
 let angle = 0
-
-// Resize
-const resize = () =>
-{
-    $canvas.width = window.innerWidth
-    $canvas.height = window.innerHeight
-    center.x = $canvas.width * 0.5
-    center.y = $canvas.height * 0.5
-}
-
-window.addEventListener('resize', resize)
-resize()
 
 // VARIABLES
 const color1 = '#00ff00'
@@ -186,6 +175,24 @@ const orangeEnd = {
 
 // FUNCTIONS
 
+// Resize
+const resize = () =>
+{
+    $canvas.width = window.innerWidth
+    $canvas.height = window.innerHeight
+    center.x = $canvas.width * 0.5
+    center.y = $canvas.height * 0.5
+    greenEnd.x = redEnd.x = yellowEnd.x = blueEnd.x = orangeEnd.x = center.x
+    greenEnd.y = center.y * 1.5
+    redEnd.y = center.y * 1.25
+    yellowEnd.y = center.y
+    blueEnd.y = center.y * 0.75
+    orangeEnd.y = center.y * 0.5
+}
+
+window.addEventListener('resize', resize)
+resize()
+
 notes = musics[0]
 
 // Set timer
@@ -193,6 +200,7 @@ const timer = () => {
     if(isReady) {
         gameTime += 0.01
         $audio.play()
+        $audio.volume = 1
     }
 }
 window.setInterval(timer, timerSpeed)
@@ -238,7 +246,6 @@ window.addEventListener('keydown', (event) => {
         case color2 : // Red
             if (event.keyCode === 90) { // Press Z
                 scoring()
-                isPressed = true
             }
             break;
         case color3 : // Yellow
@@ -258,9 +265,6 @@ window.addEventListener('keydown', (event) => {
             break;
     }
 })
-window.addEventListener('keyup', () => {
-    isPressed = false
-})
 
 
 const clear = () => {
@@ -270,11 +274,12 @@ const clear = () => {
 const loop = () =>
 {
     window.requestAnimationFrame(loop)
+    resize()
     updateNotes()
     updateEnd()
     clear()
     draw()
-    $score.textContent = score
+    $scoreValue.textContent = score
 }
 loop()
 
