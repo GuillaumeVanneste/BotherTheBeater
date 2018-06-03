@@ -1,11 +1,43 @@
-let isPressed = false
-
 const updateEnd = () => {
-    if(isPressed) {
-        redEnd.radius = endRadius + 5
-    } else {
-        redEnd.radius = endRadius
-    }
+    window.addEventListener('keydown', (event) => {
+        switch (event.keyCode) {
+            case 65:
+                greenEnd.radius = endRadius + 5
+                break;
+            case 90:
+                redEnd.radius = endRadius + 5
+                break;
+            case 69:
+                yellowEnd.radius = endRadius + 5
+                break;
+            case 82:
+                blueEnd.radius = endRadius + 5
+                break;
+            case 84:
+                orangeEnd.radius = endRadius + 5
+                break;
+        }
+    })
+
+    window.addEventListener('keyup', (event) => {
+        switch (event.keyCode) {
+            case 65:
+                greenEnd.radius = endRadius
+                break;
+            case 90:
+                redEnd.radius = endRadius
+                break;
+            case 69:
+                yellowEnd.radius = endRadius
+                break;
+            case 82:
+                blueEnd.radius = endRadius
+                break;
+            case 84:
+                orangeEnd.radius = endRadius
+                break;
+        }
+    })
 }
 
 const updateNotes = () => {

@@ -17,7 +17,7 @@ h1.title {
     margin-bottom: 45px;
 }
 
-.main h2 {
+.main .section h2 {
     position: absolute;
     top: -20px;
     text-align: center;
@@ -50,6 +50,10 @@ h1.title {
 .home .keysInstruction .keys span {
     font-size: 1.5vw;
     line-height: 3.8vw;
+}
+
+.game .player2.controls {
+    display: none;
 }
 
 .game .malus {
@@ -101,6 +105,14 @@ h1.title {
 
 .home .modal {
     color: black;
+}
+
+.game .score {
+    position: absolute;
+    top: 20px;
+    left: 50px;
+    font-size: 24px;
+
 }
 
 @media only screen and (max-width: 600px) { .row.valign-wrapper { display: inherit; } }
