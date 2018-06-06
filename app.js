@@ -38,7 +38,7 @@ const io = require('socket.io')(server,{})
 io.sockets.on('connection', (socket) => {
 
     // Once a client has connected, he join a room
-    socket.on('room', (room) => {
+    socket.on('room', () => {
 
         // If client forget to refer a name or a room
         if (!isRealString(name)) {
@@ -56,14 +56,20 @@ io.sockets.on('connection', (socket) => {
             case 0: // first client -> create the room
                 socket.join(room) // Client join the room
                 if(!currentRooms.includes(room))
-                    currentRooms.push(room)
+                    currentRooms.push([room, name])
                 socket.emit('created', room, name)
+                console.log(currentRooms)
                 break
             case 1: // Seco²nd client -> join the room
                 socket.join(room) // Client join the room
+                for (let i = 0; i < currentRooms.length; i++) {
+                    if(currentRooms[i][0] === room)
+                        currentRooms[i].push(name)
+                }
                 socket.in(room).broadcast.emit('join', name) // Send message to the client already in the room
                 socket.emit('joined', room, name) // Send message to the client who joined
                 io.sockets.in(room).emit('ready') // Send a ready message to all clients of the room
+                console.log(currentRooms)
                 break
             case 2: // Already 2 clients in the room -> the room is full
                 socket.emit('err', 'The room ' + room + ' is full') // Send an error to the client
@@ -76,9 +82,17 @@ io.sockets.on('connection', (socket) => {
             socket.in(room).emit('message', 'You got a malus !')
         })
 
-        socket.on('leaveRoom', (room) => {
-            if(numClients === 0)
-                currentRooms.splice(currentRooms.indexOf(room), 1)
+        socket.on('leaveRoom', (myRoom, myUsername) => {
+            const clientsInRoom = io.nsps['/'].adapter.rooms[myRoom] // Array of all clients in the room
+            const numClients = clientsInRoom === undefined ? 0 : Object.keys(clientsInRoom.sockets).length // Count number of clients
+            for (let i = 0; i < currentRooms.length; i++) {
+                if(numClients === 1 && currentRooms[i][0] === myRoom)
+                    currentRooms.splice(i, 1)
+                else if (currentRooms[i][0] === myRoom)
+                    currentRooms[i].splice(currentRooms[i].indexOf(myUsername), 1)
+            }
+            console.log(currentRooms)
+            console.log('AU REVOIIIIIIIIIIIIIIIR !')
         })
     })
 
