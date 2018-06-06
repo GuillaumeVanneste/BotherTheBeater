@@ -1,15 +1,14 @@
 // set-up a connection between the client and the server
 const socket = io({transports: ['websocket'], upgrade: false})
 let isReady = false
-const room = window.location.pathname.slice(1)
+let myRoom = ''
 let myUsername = ''
 let player = ''
 
-
-socket.emit('room', room)
+socket.emit('room')
 
 window.addEventListener('beforeunload', () => {
-    socket.emit('leaveRoom', room)
+    socket.emit('leaveRoom', myRoom, myUsername)
 })
 
 /**
@@ -104,6 +103,7 @@ socket.on('connect', () => {
 socket.on('created', (room, name) => {
     console.log('you\'ve created the room ' + room + ' as user ' + name)
     myUsername = name
+    myRoom = room
     player = 'player1'
     definePlayer()
 })
@@ -112,6 +112,7 @@ socket.on('created', (room, name) => {
 socket.on('joined', (room, name) => {
     console.log('you\'ve joined the room ' + room + ' as user ' + name)
     myUsername = name
+    myRoom = room
     player = 'player2'
     definePlayer()
 })
