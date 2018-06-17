@@ -1,9 +1,13 @@
 // set-up a connection between the client and the server
 const socket = io({transports: ['websocket'], upgrade: false})
-let isReady = false
+
+const $username = document.querySelector('.username')
+const $usernameValue = $username.querySelector('.value')
+const $role = document.querySelector('.role')
+const $roleValue = $role.querySelector('.value')
 let myRoom = ''
 let myUsername = ''
-let player = ''
+let myRole = ''
 
 socket.emit('room')
 
@@ -18,12 +22,14 @@ const $botherControls = document.querySelector('.bother.controls')
 const $malus = document.querySelector('.malus')
 const $buttons = $malus.querySelectorAll("button")
 
-const definePlayer = () => {
-    if(player === 'beater') {
+const defineRole = () => {
+    if(myRole === 'beater') {
         $botherControls.style = 'display: none;'
     } else {
         $botherControls.style = 'display: block;'
     }
+    $usernameValue.textContent = myUsername
+    $roleValue.textContent = myRole
 }
 
 // For each button of $buttons
@@ -95,9 +101,9 @@ socket.on('malus', (malus) => {
 /**
  * Score
  */
-window.setInterval(function () { if (player === 'beater') {socket.emit('updateScore', score)} }, 100)
+window.setInterval(function () { if (myRole === 'beater') {socket.emit('updateScore', score)} }, 100)
 socket.on('updateScore', (updateScore) => {
-    if (player === 'bother') {
+    if (myRole === 'bother') {
         score = updateScore
     }
 })
@@ -115,8 +121,8 @@ socket.on('created', (room, name) => {
     console.log('you\'ve created the room ' + room + ' as user ' + name)
     myUsername = name
     myRoom = room
-    player = 'beater'
-    definePlayer()
+    myRole = 'beater'
+    defineRole()
 })
 
 // Received a message qhen the client join the room
@@ -124,8 +130,8 @@ socket.on('joined', (room, name) => {
     console.log('you\'ve joined the room ' + room + ' as user ' + name)
     myUsername = name
     myRoom = room
-    player = 'bother'
-    definePlayer()
+    myRole = 'bother'
+    defineRole()
 })
 
 // Received a message qhen the client join the room
@@ -136,10 +142,9 @@ socket.on('join', (name) => {
 /**
  * Ready
  */
-
-// Received a message qhen the client join the room
+// Launch the game when all players are in the room
 socket.on('ready', () => {
-    isReady = true
+    launchGame()
     console.log('The game begins !!!')
 })
 

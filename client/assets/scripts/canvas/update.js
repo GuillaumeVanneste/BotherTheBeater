@@ -42,7 +42,7 @@ const updateEnd = () => {
 
 const updateNotes = () => {
     for(const note of notes) {
-        if(note.time < gameTime) {
+        if(note.time < $audio.currentTime) {
             note.x += 12.25
         }
         if (note.x >= center.x + endRadius * 2) { // Missed
@@ -57,7 +57,7 @@ const updateParticles = () => {
     for(const particle of particles) {
         particle.x += particle.speed
         particle.y += particle.direction
-        if(particle.x > center.x + (center.x / 4)) {
+        if(particle.x > center.x + (center.x / 5)) {
             particles.splice(i, 1)
         }
         i++

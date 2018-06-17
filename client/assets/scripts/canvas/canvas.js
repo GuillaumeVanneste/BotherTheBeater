@@ -3,6 +3,8 @@ const $canvas = document.querySelector('canvas')
 const context = $canvas.getContext('2d')
 const $score = document.querySelector('.score')
 const $scoreValue = $score.querySelector('.value')
+const $restartPopup = document.querySelector('.restartPopup')
+const $restartButton = $restartPopup.querySelector('.restartButton')
 const center = {x: $canvas.width * 0.5, y: $canvas.height * 0.5} // Center of canvas
 let angle = 0
 
@@ -16,7 +18,6 @@ const globalRadius = 25
 const endRadius = 35
 const timeTravel = 0.75
 let musicNumber = 0
-let gameTime = 0
 let notes = []
 let score = 0
 let perfect = 0
@@ -27,6 +28,80 @@ let timerSpeed = 10
 const $audio = document.querySelector('audio')
 
 const musics = [
+    [
+        [color1, 2.46],
+        [color2, 3.03],
+        [color3, 3.50],
+        [color1, 4.37],
+        [color2, 4.87],
+        [color3, 5.37],
+        [color2, 5.67],
+        [color1, 6.77],
+        [color2, 7.27],
+        [color3, 7.80],
+        [color2, 8.64],
+        [color1, 9.17],
+        [color1, 11.07],
+        [color2, 11.61],
+        [color3, 12.11],
+        [color1, 12.98],
+        [color2, 13.51],
+        [color3, 14.01],
+        [color2, 14.31],
+        [color1, 15.41],
+        [color2, 15.94],
+        [color3, 16.48],
+        [color2, 17.31],
+        [color1, 17.85],
+        [color1, 19.75],
+        [color2, 20.28],
+        [color3, 20.85],
+        [color1, 21.65],
+        [color2, 22.18],
+        [color3, 22.68],
+        [color2, 22.98],
+        [color1, 24.09],
+        [color2, 24.62],
+        [color3, 25.15],
+        [color2, 25.92],
+        [color1, 26.52],
+        [color1, 28.39],
+        [color2, 28.89],
+        [color3, 29.42],
+        [color1, 30.23],
+        [color2, 30.76],
+        [color3, 31.26],
+        [color2, 31.56],
+        [color1, 32.59],
+        [color2, 33.16],
+        [color3, 33.66],
+        [color2, 34.46],
+        [color1, 35.00],
+        [color1, 36.83],
+        [color2, 37.37],
+        [color3, 37.90],
+        [color1, 38.70],
+        [color2, 39.23],
+        [color3, 39.74],
+        [color2, 40.04],
+        [color1, 41.10],
+        [color2, 41.64],
+        [color3, 42.14],
+        [color2, 42.94],
+        [color1, 43.44],
+        [color1, 45.31],
+        [color2, 45.84],
+        [color3, 46.34],
+        [color1, 47.14],
+        [color2, 47.68],
+        [color3, 48.21],
+        [color2, 48.51],
+        [color1, 49.51],
+        [color2, 50.01],
+        [color3, 50.55],
+        [color2, 51.35],
+        [color1, 51.85],
+    ],
     [
         [color2, 9.27],
         [color2, 9.82],
@@ -193,17 +268,16 @@ const resize = () =>
 window.addEventListener('resize', resize)
 resize()
 
-notes = musics[0]
-
-// Set timer
-const timer = () => {
-    if(isReady) {
-        gameTime += 0.01
-        $audio.play()
-        $audio.volume = 1
+// Launch the game
+const launchGame = () => {
+    $audio.setAttribute('src','assets/musics/music' + musicNumber + '.mp3');
+    for (const note of musics[musicNumber]) {
+        notes.push(note)
     }
+    $audio.play()
+    $audio.volume = 1
+    createNotes()
 }
-window.setInterval(timer, timerSpeed)
 
 const createNotes = () => {
     for(const note of notes) {
@@ -234,7 +308,6 @@ const createNotes = () => {
         }
     }
 }
-createNotes()
 
 const particles = []
 
@@ -294,12 +367,17 @@ const clear = () => {
 
 const loop = () =>
 {
-    window.requestAnimationFrame(loop)
-    resize()
-    update()
-    clear()
-    draw()
-    $scoreValue.textContent = score
+    if($audio.currentTime !== $audio.duration) {
+        window.requestAnimationFrame(loop)
+        resize()
+        update()
+        clear()
+        draw()
+        $scoreValue.textContent = score
+    } else {
+        $restartPopup.style = 'display: block'
+        $audio.currentTime = 0
+    }
 }
 loop()
 
@@ -321,3 +399,10 @@ const scoring = () => {
         notes.shift()
     }
 }
+
+// Launch the game again if the player press the restart button
+$restartButton.addEventListener('mousedown', () => {
+    $restartPopup.style = 'display: none'
+    launchGame()
+    loop()
+})
