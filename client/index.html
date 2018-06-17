@@ -81,7 +81,19 @@
                             <input id="room" name="room" type="text" class="validate" autocomplete="off">
                             <label for="room">Room name</label>
                         </div>
-                        <button class="waves-effect waves-light btn-small orange hoverable" type="submit">Join the room</button>
+                        <div class="col s6">
+                            <label>
+                                <input class="with-gap" name="difficulty" type="radio" value="0" checked />
+                                <span>Easy</span>
+                            </label>
+                        </div>
+                        <div class="col s6">
+                            <label>
+                                <input class="with-gap" name="difficulty" type="radio" value="1" />
+                                <span>Medium</span>
+                            </label>
+                        </div>
+                        <button class="joinButton right waves-effect waves-light btn-small orange hoverable" type="submit">Join the room</button>
                     </form>
                 </div>
             </div>
@@ -95,6 +107,7 @@
                             <tr>
                                 <th>Room Name</th>
                                 <th><i class="material-icons">sentiment_very_satisfied</i></th>
+                                <th>Difficulty</th>
                             </tr>
                         </thead>
                         <tbody class="roomsTable">

@@ -67,6 +67,9 @@ h1.title {
     color: black;
 }
 
+.home .joinButton {
+    margin-top: 16px;
+}
 
 /********************
 
@@ -148,6 +151,7 @@ h1.title {
 
 .game .restartPopup {
     display: none;
+    z-index: 2;
 }
 
 @media only screen and (max-width: 600px) { .row.valign-wrapper { display: inherit; } }
