@@ -82,6 +82,11 @@ io.sockets.on('connection', (socket) => {
             socket.in(room).emit('message', 'You got a malus !')
         })
 
+        // Emit the score to the other player in the same romm
+        socket.on('updateScore', (updateScore) => {
+            socket.in(room).broadcast.emit('updateScore', updateScore)
+        })
+
         socket.on('leaveRoom', (myRoom, myUsername) => {
             const clientsInRoom = io.nsps['/'].adapter.rooms[myRoom] // Array of all clients in the room
             const numClients = clientsInRoom === undefined ? 0 : Object.keys(clientsInRoom.sockets).length // Count number of clients

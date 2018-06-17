@@ -93,6 +93,17 @@ socket.on('malus', (malus) => {
 })
 
 /**
+ * Score
+ */
+window.setInterval(function () { if (player === 'player1') {socket.emit('updateScore', score)} }, 100)
+socket.on('updateScore', (updateScore) => {
+    if (player === 'player2') {
+        score = updateScore
+    }
+})
+
+
+/**
  * Messages
  */
 socket.on('connect', () => {
