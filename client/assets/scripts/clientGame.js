@@ -14,15 +14,15 @@ window.addEventListener('beforeunload', () => {
 /**
  * Malus
  */
-const $player2Controls = document.querySelector('.player2.controls')
+const $botherControls = document.querySelector('.bother.controls')
 const $malus = document.querySelector('.malus')
 const $buttons = $malus.querySelectorAll("button")
 
 const definePlayer = () => {
-    if(player === 'player1') {
-        $player2Controls.style = 'display: none;'
+    if(player === 'beater') {
+        $botherControls.style = 'display: none;'
     } else {
-        $player2Controls.style = 'display: block;'
+        $botherControls.style = 'display: block;'
     }
 }
 
@@ -95,9 +95,9 @@ socket.on('malus', (malus) => {
 /**
  * Score
  */
-window.setInterval(function () { if (player === 'player1') {socket.emit('updateScore', score)} }, 100)
+window.setInterval(function () { if (player === 'beater') {socket.emit('updateScore', score)} }, 100)
 socket.on('updateScore', (updateScore) => {
-    if (player === 'player2') {
+    if (player === 'bother') {
         score = updateScore
     }
 })
@@ -115,7 +115,7 @@ socket.on('created', (room, name) => {
     console.log('you\'ve created the room ' + room + ' as user ' + name)
     myUsername = name
     myRoom = room
-    player = 'player1'
+    player = 'beater'
     definePlayer()
 })
 
@@ -124,7 +124,7 @@ socket.on('joined', (room, name) => {
     console.log('you\'ve joined the room ' + room + ' as user ' + name)
     myUsername = name
     myRoom = room
-    player = 'player2'
+    player = 'bother'
     definePlayer()
 })
 
