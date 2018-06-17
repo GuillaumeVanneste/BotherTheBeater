@@ -9,7 +9,7 @@ socket.on("updateBrowser", (currentRooms) => {
     if(!arraysEqual(allRooms, currentRooms)) {
         allRooms = currentRooms
         $roomsTable.innerHTML = ""
-        if(currentRooms.length === 0) {
+        if(currentRooms.length === 0) { // No room yet
             const row = $roomsTable.insertRow(0)
             const cell1 = row.insertCell(0)
             cell1.innerHTML = 'Any room has been created yet !'
@@ -21,14 +21,14 @@ socket.on("updateBrowser", (currentRooms) => {
                 const cell3 = row.insertCell(2)
                 const cell4 = row.insertCell(3)
                 cell1.innerHTML = currentRooms[i][0]
-                if(currentRooms[i].length - 2 === 1) {
+                if(currentRooms[i].length - 2 === 1) { // Display number of client in room
                     cell2.style = 'color: green'
                     cell2.innerHTML = currentRooms[i].length - 2 + '/2'
                 } else {
                     cell2.style = 'color: red'
                     cell2.innerHTML = 'full'
                 }
-                if(currentRooms[i][1] === '0') {
+                if(currentRooms[i][1] === '0') { // Display the difficulty of the room
                     cell3.innerHTML = 'Easy'
                 } else {
                     cell3.innerHTML = 'Medium'
@@ -36,7 +36,7 @@ socket.on("updateBrowser", (currentRooms) => {
                 cell4.innerHTML = '<button type="submit" class="waves-effect waves-light btn-small orange modal-trigger" data-target="modal1">Join</button>'
                 console.log("create rooms")
                 const triggerModal = cell4.querySelector('button')
-                triggerModal.addEventListener('mousedown', () => {
+                triggerModal.addEventListener('mousedown', () => { // Quick join
                     $modalTitle.innerHTML = 'Joining ' + currentRooms[i][0]
                     $modalRoom.value = currentRooms[i][0]
                 })
@@ -45,12 +45,9 @@ socket.on("updateBrowser", (currentRooms) => {
     }
 })
 
-window.setInterval(function () {socket.emit('askBrowser')}, 1000)
+window.setInterval(function () {socket.emit('askBrowser')}, 1000) // Ask every seconds an update of the browser
 
-$(document).ready(function(){
-    $('.modal').modal()
-})
-
+// Function to detect if 2 arrays are egals
 const arraysEqual = (array1, array2) => {
     if(array1.length !== array2.length)
         return false
@@ -60,3 +57,8 @@ const arraysEqual = (array1, array2) => {
     }
     return true
 }
+
+// modal fucntion from materialize to activate the modal on the click of the quick join button
+$(document).ready(function(){
+    $('.modal').modal()
+})

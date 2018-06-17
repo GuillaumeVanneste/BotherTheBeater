@@ -1,12 +1,12 @@
 // Set-up canvas
 const $canvas = document.querySelector('canvas')
 const context = $canvas.getContext('2d')
+const center = {x: $canvas.width * 0.5, y: $canvas.height * 0.5} // Center of canvas
 const $score = document.querySelector('.score')
 const $scoreValue = $score.querySelector('.value')
 const $restartPopup = document.querySelector('.restartPopup')
 const $restartButton = $restartPopup.querySelector('.restartButton')
-const center = {x: $canvas.width * 0.5, y: $canvas.height * 0.5} // Center of canvas
-let angle = 0
+const $audio = document.querySelector('audio')
 
 // VARIABLES
 const color1 = '#00ff00'
@@ -14,21 +14,27 @@ const color2 = '#ff0000'
 const color3 = '#ffff00'
 const color4 = '#0000ff'
 const color5 = '#ff7000'
+
+const notes = []
+const particles = []
+
 const globalRadius = 25
 const endRadius = 35
 const timeTravel = 0.75
+
 let musicNumber = 0
-let notes = []
 let score = 0
+
 let perfect = 0
 let tooSoon = 0
 let tooLate = 0
 let missed = 0
+
+let angle = 0
 let timerSpeed = 10
-const $audio = document.querySelector('audio')
 
 const musics = [
-    [
+    [ // First music difficulty = easy
         [color1, 2.46],
         [color2, 3.03],
         [color3, 3.50],
@@ -102,7 +108,7 @@ const musics = [
         [color2, 51.35],
         [color1, 51.85],
     ],
-    [
+    [ // Second music difficulty = medium
         [color2, 9.27],
         [color2, 9.82],
         [color2, 10.37],
@@ -309,8 +315,6 @@ const createNotes = () => {
     }
 }
 
-const particles = []
-
 const createParticles = (noteY, noteColor) => {
     for (let i = 0; i < 10; i++){
         const particle = {}
@@ -327,15 +331,12 @@ const createParticles = (noteY, noteColor) => {
     }
 }
 
-
-
 window.addEventListener('keydown', (event) => {
     if (myRole === 'beater') {
         switch (notes[0].color) {
             case color1 : // Green
                 if (event.keyCode === 65) { // Press A
                     scoring()
-                    createParticles(color1)
                 }
                 break;
             case color2 : // Red
@@ -362,6 +363,24 @@ window.addEventListener('keydown', (event) => {
     }
 })
 
+const scoring = () => {
+    if (notes[0].x + notes[0].radius > center.x - endRadius && notes[0].x - notes[0].radius < center.x - endRadius) { // Pressed the key too soon
+        score += 50
+        tooSoon++
+        createParticles(notes[0].y, notes[0].color) // Create particles to show that you played the note
+        notes.shift() // remove the note played
+    } else if (notes[0].x - notes[0].radius > center.x - endRadius && notes[0].x + notes[0].radius < center.x + endRadius) { // Pressed at the perfect time
+        score += 150
+        perfect++
+        createParticles(notes[0].y, notes[0].color) // Create particles to show that you played the note
+        notes.shift() // remove the note played
+    } else if (notes[0].x - notes[0].radius > center.x + endRadius){ // Pressed too late
+        score += 50
+        tooLate++
+        createParticles(notes[0].y, notes[0].color) // Create particles to show that you played the note
+        notes.shift() // remove the note played
+    }
+}
 
 const clear = () => {
     context.clearRect(0, 0, $canvas.width, $canvas.height)
@@ -369,38 +388,22 @@ const clear = () => {
 
 const loop = () =>
 {
-    if($audio.currentTime !== $audio.duration) {
+    if($audio.currentTime !== $audio.duration) { // music is stil playing
         window.requestAnimationFrame(loop)
         resize()
         update()
         clear()
         draw()
         $scoreValue.textContent = score
-    } else {
+    } else { //music is finished
         $restartPopup.style = 'display: block'
         $audio.currentTime = 0
     }
-}
-loop()
-
-const scoring = () => {
-    if (notes[0].x + notes[0].radius > center.x - endRadius && notes[0].x - notes[0].radius < center.x - endRadius) { // Pressed the key too soon
-        score += 50
-        tooSoon++
-        createParticles(notes[0].y, notes[0].color)
-        notes.shift()
-    } else if (notes[0].x - notes[0].radius > center.x - endRadius && notes[0].x + notes[0].radius < center.x + endRadius) { // Pressed at the perfect time
-        score += 150
-        perfect++
-        createParticles(notes[0].y, notes[0].color)
-        notes.shift()
-    } else if (notes[0].x - notes[0].radius > center.x + endRadius){ // Pressed too late
-        score += 50
-        tooLate++
-        createParticles(notes[0].y, notes[0].color)
-        notes.shift()
+    if ($audio.currentTime >= $audio.duration / 2 && switchRole !== null ) { // switch the beater and the bother at the middle of the music
+        switchRole()
     }
 }
+loop()
 
 // Launch the game again if the player press the restart button
 $restartButton.addEventListener('mousedown', () => {
@@ -408,3 +411,18 @@ $restartButton.addEventListener('mousedown', () => {
     launchGame()
     loop()
 })
+
+
+// Switch the role of the player
+let switchRole = () => {
+    switch(myRole) {
+        case 'beater':
+            myRole = 'bother'
+            defineRole()
+            break;
+        default:
+            myRole = 'beater'
+            defineRole()
+    }
+    switchRole = null
+}

@@ -11,10 +11,6 @@ let myDifficulty = ''
 
 socket.emit('room')
 
-window.addEventListener('beforeunload', () => {
-    socket.emit('leaveRoom', myRoom, myUsername)
-})
-
 /**
  * Malus
  */
@@ -60,6 +56,7 @@ for (let i = 0; i < $buttons.length; i++) {
         cooldown()
         cooldownInterval = window.setInterval(cooldown, 1000)
 
+        // Set an anticheat on the malus buttons
         const antiCheat = () => {
             if(button.disabled === false && cooldownTimer > 0) {
                 button.disabled = true
@@ -101,6 +98,7 @@ socket.on('malus', (malus) => {
 /**
  * Score
  */
+// The beater send his score to the server and the bother update it
 window.setInterval(function () { if (myRole === 'beater') {socket.emit('updateScore', score)} }, 100)
 socket.on('updateScore', (updateScore) => {
     if (myRole === 'bother') {
@@ -136,16 +134,11 @@ socket.on('joined', (room, name, difficulty) => {
     defineRole()
 })
 
-// Received a message qhen the client join the room
-socket.on('join', (name) => {
-    console.log(name + ' has joined your room')
-})
-
 /**
  * Ready
  */
 
-// Received a message qhen the client join the room
+// Launch the game when 2 clients are in the room
 socket.on('ready', () => {
     launchGame()
     console.log('The game begins !!!')
@@ -159,4 +152,12 @@ socket.on('ready', () => {
 socket.on('err', (errorMessage) => {
     window.alert('Error message : ' + errorMessage) // Write the error message
     location.href = '/' // Return to the connection page
+})
+
+/**
+ * Leave the room
+ */
+// When the client leave the room
+ window.addEventListener('beforeunload', () => {
+    socket.emit('leaveRoom', myRoom, myUsername)
 })
