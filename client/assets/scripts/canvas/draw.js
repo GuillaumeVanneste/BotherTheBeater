@@ -61,9 +61,14 @@ const drawParticles = () => {
     for(const particle of particles)
     {
         context.beginPath()
+        context.save()
+        context.translate(center.x, center.y)
+        context.rotate(angle * Math.PI / 180)
+        context.translate(-center.x, -center.y)
         context.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2)
         context.fillStyle = particle.color
         context.fill()
+        context.restore()
     }
 }
 

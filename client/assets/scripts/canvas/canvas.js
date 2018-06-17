@@ -369,16 +369,19 @@ const scoring = () => {
         score += 50
         tooSoon++
         createParticles(notes[0].y, notes[0].color) // Create particles to show that you played the note
+        socket.emit('particles', myRoom, notes[0].y, notes[0].color)
         notes.shift() // remove the note played
     } else if (notes[0].x - notes[0].radius > center.x - endRadius && notes[0].x + notes[0].radius < center.x + endRadius) { // Pressed at the perfect time
         score += 150
         perfect++
         createParticles(notes[0].y, notes[0].color) // Create particles to show that you played the note
+        socket.emit('particles', myRoom, notes[0].y, notes[0].color)
         notes.shift() // remove the note played
     } else if (notes[0].x - notes[0].radius > center.x + endRadius){ // Pressed too late
         score += 50
         tooLate++
         createParticles(notes[0].y, notes[0].color) // Create particles to show that you played the note
+        socket.emit('particles', myRoom, notes[0].y, notes[0].color)
         notes.shift() // remove the note played
     }
 }
@@ -422,7 +425,7 @@ let switchRole = () => {
             myRole = 'bother'
             defineRole()
             break;
-        default:
+        case 'bother':
             myRole = 'beater'
             defineRole()
     }

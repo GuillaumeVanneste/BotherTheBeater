@@ -97,6 +97,11 @@ io.sockets.on('connection', (socket) => {
                     currentRooms[i].splice(currentRooms[i].indexOf(myUsername), 1)
             }
         })
+
+        socket.on('particles', (room, noteY, noteColor) => {
+            socket.in(room).broadcast.emit('particles', noteY, noteColor)
+        })
+
     })
 
     socket.on('askBrowser', () => {

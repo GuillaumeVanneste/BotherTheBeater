@@ -82,11 +82,6 @@ socket.on('malus', (malus) => {
         case 'rotate':
             angle += 90
             break
-
-        //malus 3 -> increase the speed of the music
-        case 'speed':
-            timerSpeed = 5
-            break
     }
 })
 
@@ -101,6 +96,12 @@ socket.on('updateScore', (updateScore) => {
     }
 })
 
+/**
+ * Particles
+ */
+socket.on('particles', (noteY, noteColor) => {
+    createParticles(noteY, noteColor)
+})
 
 /**
  * Messages
