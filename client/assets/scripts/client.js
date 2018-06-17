@@ -19,18 +19,23 @@ socket.on("updateBrowser", (currentRooms) => {
                 const cell1 = row.insertCell(0)
                 const cell2 = row.insertCell(1)
                 const cell3 = row.insertCell(2)
+                const cell4 = row.insertCell(3)
                 cell1.innerHTML = currentRooms[i][0]
-                if(currentRooms[i].length - 1 === 1){
+                if(currentRooms[i].length - 2 === 1) {
                     cell2.style = 'color: green'
-                    cell2.innerHTML = currentRooms[i].length - 1 + '/2'
-                }
-                else {
+                    cell2.innerHTML = currentRooms[i].length - 2 + '/2'
+                } else {
                     cell2.style = 'color: red'
                     cell2.innerHTML = 'full'
                 }
-                cell3.innerHTML = '<button type="submit" class="waves-effect waves-light btn-small orange modal-trigger" data-target="modal1">Join</button>'
+                if(currentRooms[i][1] === '0') {
+                    cell3.innerHTML = 'Easy'
+                } else {
+                    cell3.innerHTML = 'Medium'
+                }
+                cell4.innerHTML = '<button type="submit" class="waves-effect waves-light btn-small orange modal-trigger" data-target="modal1">Join</button>'
                 console.log("create rooms")
-                const triggerModal = cell3.querySelector('button')
+                const triggerModal = cell4.querySelector('button')
                 triggerModal.addEventListener('mousedown', () => {
                     $modalTitle.innerHTML = 'Joining ' + currentRooms[i][0]
                     $modalRoom.value = currentRooms[i][0]

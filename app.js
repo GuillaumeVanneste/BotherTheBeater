@@ -6,6 +6,7 @@ const {isRealString} = require('./utilities/validation')
 const currentRooms = []
 let name = null
 let room = null
+let difficulty = null
 
 app.use(express.static(__dirname + '/client/'))
 app.use(bodyParser.json()); // support json encoded bodies
@@ -18,6 +19,7 @@ app.get('/', (req, res) => {
 app.post('/submit', (req, res) => {
     name = req.body.name
     room = req.body.room
+    difficulty = req.body.difficulty
     if(room === '') {
         res.redirect('/')
     } else {
@@ -56,8 +58,8 @@ io.sockets.on('connection', (socket) => {
             case 0: // first client -> create the room
                 socket.join(room) // Client join the room
                 if(!currentRooms.includes(room))
-                    currentRooms.push([room, name])
-                socket.emit('created', room, name)
+                    currentRooms.push([room, difficulty, name])
+                socket.emit('created', room, name, difficulty)
                 console.log(currentRooms)
                 break
             case 1: // Seco²nd client -> join the room
@@ -67,7 +69,7 @@ io.sockets.on('connection', (socket) => {
                         currentRooms[i].push(name)
                 }
                 socket.in(room).broadcast.emit('join', name) // Send message to the client already in the room
-                socket.emit('joined', room, name) // Send message to the client who joined
+                socket.emit('joined', room, name, difficulty) // Send message to the client who joined
                 io.sockets.in(room).emit('ready') // Send a ready message to all clients of the room
                 console.log(currentRooms)
                 break

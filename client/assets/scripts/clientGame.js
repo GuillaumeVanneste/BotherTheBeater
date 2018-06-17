@@ -1,6 +1,5 @@
 // set-up a connection between the client and the server
 const socket = io({transports: ['websocket'], upgrade: false})
-
 const $username = document.querySelector('.username')
 const $usernameValue = $username.querySelector('.value')
 const $role = document.querySelector('.role')
@@ -8,6 +7,7 @@ const $roleValue = $role.querySelector('.value')
 let myRoom = ''
 let myUsername = ''
 let myRole = ''
+let myDifficulty = ''
 
 socket.emit('room')
 
@@ -18,7 +18,7 @@ window.addEventListener('beforeunload', () => {
 /**
  * Malus
  */
-const $botherControls = document.querySelector('.bother.controls')
+const $botherControls = document.querySelector('.bother .controls')
 const $malus = document.querySelector('.malus')
 const $buttons = $malus.querySelectorAll("button")
 
@@ -117,20 +117,22 @@ socket.on('connect', () => {
 })
 
 // Received a message qhen the client create the room
-socket.on('created', (room, name) => {
+socket.on('created', (room, name, difficulty) => {
     console.log('you\'ve created the room ' + room + ' as user ' + name)
     myUsername = name
     myRoom = room
     myRole = 'beater'
+    myDifficulty = difficulty
     defineRole()
 })
 
 // Received a message qhen the client join the room
-socket.on('joined', (room, name) => {
+socket.on('joined', (room, name, difficulty) => {
     console.log('you\'ve joined the room ' + room + ' as user ' + name)
     myUsername = name
     myRoom = room
     myRole = 'bother'
+    myDifficulty = difficulty
     defineRole()
 })
 
@@ -142,7 +144,8 @@ socket.on('join', (name) => {
 /**
  * Ready
  */
-// Launch the game when all players are in the room
+
+// Received a message qhen the client join the room
 socket.on('ready', () => {
     launchGame()
     console.log('The game begins !!!')
