@@ -2,6 +2,7 @@
 const socket = io({transports: ['websocket'], upgrade: false})
 const $roomsTable = document.querySelector('.roomsTable')
 const $modalRoom = document.querySelector('.modalRoom')
+const $modalDifficulty = document.querySelector('.modalDifficulty')
 const $modalTitle = document.querySelector('.modalTitle')
 let allRooms = []
 
@@ -38,6 +39,7 @@ socket.on("updateBrowser", (currentRooms) => {
                 triggerModal.addEventListener('mousedown', () => { // Quick join
                     $modalTitle.innerHTML = 'Joining ' + currentRooms[i][0]
                     $modalRoom.value = currentRooms[i][0]
+                    $modalDifficulty.value = currentRooms[i][1]
                 })
             }
         }

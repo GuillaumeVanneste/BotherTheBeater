@@ -109,7 +109,7 @@ socket.on('connect', () => {
     console.log('user connected')
 })
 
-// Received a message qhen the client create the room
+// Received from server qhen the client create the room
 socket.on('created', (room, name, difficulty) => {
     myUsername = name
     myRoom = room
@@ -118,7 +118,7 @@ socket.on('created', (room, name, difficulty) => {
     defineRole()
 })
 
-// Received a message qhen the client join the room
+// Received from server when the client join the room
 socket.on('joined', (room, name, difficulty) => {
     myUsername = name
     myRoom = room
@@ -133,6 +133,7 @@ socket.on('joined', (room, name, difficulty) => {
 
 // Launch the game when 2 clients are in the room
 socket.on('ready', () => {
+    musicNumber = myDifficulty
     launchGame()
 })
 

@@ -154,4 +154,8 @@ h1.title {
     z-index: 2;
 }
 
+.game .modal {
+    color: black;
+}
+
 @media only screen and (max-width: 600px) { .row.valign-wrapper { display: inherit; } }

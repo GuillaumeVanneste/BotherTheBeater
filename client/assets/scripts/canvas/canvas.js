@@ -5,6 +5,7 @@ const center = {x: $canvas.width * 0.5, y: $canvas.height * 0.5} // Center of ca
 const $score = document.querySelector('.score')
 const $scoreValue = $score.querySelector('.value')
 const $restartPopup = document.querySelector('.restartPopup')
+const $restartPopupContent = $restartPopup.querySelector('.modal-content p')
 const $restartButton = $restartPopup.querySelector('.restartButton')
 const $audio = document.querySelector('audio')
 
@@ -397,6 +398,7 @@ const loop = () =>
         $scoreValue.textContent = score
     } else { //music is finished
         $restartPopup.style = 'display: block'
+        $restartPopupContent.innerHTML = 'Your final score is ' + score + ' with ' + perfect + ' perfect notes, ' + tooSoon + ' too soon, ' + tooLate + ' too late and ' + missed + ' missed notes !'
         $audio.currentTime = 0
     }
     if ($audio.currentTime >= $audio.duration / 2 && switchRole !== null ) { // switch the beater and the bother at the middle of the music

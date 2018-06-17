@@ -53,11 +53,13 @@ const updateNotes = () => {
 }
 
 const updateParticles = () => {
+    let i = 0
     for(const particle of particles) {
         particle.x += particle.speed
         particle.y += particle.direction
         if(particle.x > center.x + (center.x / 5))
             particles.splice(i, 1)
+        i++
     }
 }
 
