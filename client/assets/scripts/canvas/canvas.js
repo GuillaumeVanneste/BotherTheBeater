@@ -330,33 +330,35 @@ const createParticles = (noteY, noteColor) => {
 
 
 window.addEventListener('keydown', (event) => {
-    switch (notes[0].color) {
-        case color1 : // Green
-            if (event.keyCode === 65) { // Press A
-                scoring()
-                createParticles(color1)
-            }
-            break;
-        case color2 : // Red
-            if (event.keyCode === 90) { // Press Z
-                scoring()
-            }
-            break;
-        case color3 : // Yellow
-            if (event.keyCode === 69) { // Press E
-                scoring()
-            }
-            break;
-        case color4 : // Blue
-            if (event.keyCode === 82) { // Press R
-                scoring()
-            }
-            break;
-        case color5 : // Orange
-            if (event.keyCode === 84) { // Press T
-                scoring()
-            }
-            break;
+    if (myRole === 'beater') {
+        switch (notes[0].color) {
+            case color1 : // Green
+                if (event.keyCode === 65) { // Press A
+                    scoring()
+                    createParticles(color1)
+                }
+                break;
+            case color2 : // Red
+                if (event.keyCode === 90) { // Press Z
+                    scoring()
+                }
+                break;
+            case color3 : // Yellow
+                if (event.keyCode === 69) { // Press E
+                    scoring()
+                }
+                break;
+            case color4 : // Blue
+                if (event.keyCode === 82) { // Press R
+                    scoring()
+                }
+                break;
+            case color5 : // Orange
+                if (event.keyCode === 84) { // Press T
+                    scoring()
+                }
+                break;
+        }
     }
 })
 
