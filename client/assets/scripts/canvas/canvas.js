@@ -236,11 +236,32 @@ const createNotes = () => {
 }
 createNotes()
 
+const particles = []
+
+const createParticles = (noteY, noteColor) => {
+    for (let i = 0; i < 10; i++){
+        const particle = {}
+
+        particle.x = center.x
+        particle.y = noteY
+        particle.angle = Math.random() * Math.PI * 2
+        particle.color = noteColor
+        particle.radius = globalRadius / 5
+        particle.speed = 0.5 + Math.random() * 2
+        particle.direction = (Math.random() - 0.5)
+
+        particles.push(particle)
+    }
+}
+
+
+
 window.addEventListener('keydown', (event) => {
     switch (notes[0].color) {
         case color1 : // Green
             if (event.keyCode === 65) { // Press A
                 scoring()
+                createParticles(color1)
             }
             break;
         case color2 : // Red
@@ -275,8 +296,7 @@ const loop = () =>
 {
     window.requestAnimationFrame(loop)
     resize()
-    updateNotes()
-    updateEnd()
+    update()
     clear()
     draw()
     $scoreValue.textContent = score
@@ -287,14 +307,17 @@ const scoring = () => {
     if (notes[0].x + notes[0].radius > center.x - endRadius && notes[0].x - notes[0].radius < center.x - endRadius) { // Pressed the key too soon
         score += 50
         tooSoon++
+        createParticles(notes[0].y, notes[0].color)
         notes.shift()
     } else if (notes[0].x - notes[0].radius > center.x - endRadius && notes[0].x + notes[0].radius < center.x + endRadius) { // Pressed at the perfect time
         score += 150
         perfect++
+        createParticles(notes[0].y, notes[0].color)
         notes.shift()
     } else if (notes[0].x - notes[0].radius > center.x + endRadius){ // Pressed too late
         score += 50
         tooLate++
+        createParticles(notes[0].y, notes[0].color)
         notes.shift()
     }
 }

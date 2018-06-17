@@ -46,10 +46,26 @@ const updateNotes = () => {
             note.x += 12.25
         }
         if (note.x >= center.x + endRadius * 2) { // Missed
-            score--
             missed++
             notes.shift()
         }
     }
 }
 
+const updateParticles = () => {
+    let i = 0
+    for(const particle of particles) {
+        particle.x += particle.speed
+        particle.y += particle.direction
+        if(particle.x > center.x + (center.x / 4)) {
+            particles.splice(i, 1)
+        }
+        i++
+    }
+}
+
+const update = () => {
+    updateEnd()
+    updateNotes()
+    updateParticles()
+}

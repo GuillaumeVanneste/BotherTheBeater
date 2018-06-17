@@ -57,7 +57,18 @@ const drawNotes = () => {
     }
 }
 
+const drawParticles = () => {
+    for(const particle of particles)
+    {
+        context.beginPath()
+        context.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2)
+        context.fillStyle = particle.color
+        context.fill()
+    }
+}
+
 const draw = () => {
     drawNotes()
     drawEnds()
+    drawParticles()
 }
