@@ -5,6 +5,13 @@ body{
     color: #fff;
 }
 
+/********************
+
+        HOME
+
+********************/
+
+
 h1.title {
     padding-left: 30px;
 }
@@ -52,7 +59,22 @@ h1.title {
     line-height: 3.8vw;
 }
 
-.game .player2.controls {
+.home .roomsTable tr td:nth-child(2) {
+    color: green;
+}
+
+.home .modal {
+    color: black;
+}
+
+
+/********************
+
+        GAME
+
+********************/
+
+.game .bother.controls {
     display: none;
 }
 
@@ -84,7 +106,7 @@ h1.title {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.72);
-    z-index: -1;
+    z-index: 1;
 }
 
 .game audio {
@@ -99,20 +121,33 @@ h1.title {
     z-index: -5;
 }
 
-.home .roomsTable tr td:nth-child(2) {
-    color: green;
-}
 
-.home .modal {
-    color: black;
-}
-
-.game .score {
+.game .username {
     position: absolute;
     top: 20px;
     left: 50px;
     font-size: 24px;
 
+}
+
+.game .role {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    font-size: 24px;
+
+}
+
+.game .score {
+    position: absolute;
+    top: 80px;
+    left: 50px;
+    font-size: 24px;
+
+}
+
+.game .restartPopup {
+    display: none;
 }
 
 @media only screen and (max-width: 600px) { .row.valign-wrapper { display: inherit; } }
