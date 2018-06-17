@@ -14,22 +14,22 @@ const color2 = '#ff0000'
 const color3 = '#ffff00'
 const color4 = '#0000ff'
 const color5 = '#ff7000'
-
+// arrays
 const notes = []
 const particles = []
-
+// setting variables
 const globalRadius = 25
 const endRadius = 35
 const timeTravel = 0.75
-
+// music variable
 let musicNumber = 0
+// score variables
 let score = 0
-
 let perfect = 0
 let tooSoon = 0
 let tooLate = 0
 let missed = 0
-
+// malus variables
 let angle = 0
 let timerSpeed = 10
 

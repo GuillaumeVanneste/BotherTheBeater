@@ -51,19 +51,14 @@ for (let i = 0; i < $buttons.length; i++) {
                 button.innerHTML = button.value
                 window.clearInterval(cooldownInterval)
             }
-            console.log(cooldownInterval)
         }
         cooldown()
         cooldownInterval = window.setInterval(cooldown, 1000)
 
         // Set an anticheat on the malus buttons
         const antiCheat = () => {
-            if(button.disabled === false && cooldownTimer > 0) {
+            if(button.disabled === false && cooldownTimer > 0)
                 button.disabled = true
-                console.log('YOU ARE CHEATING !')
-            } else {
-                console.log('You\'re not cheating')
-            }
         }
         window.setInterval(antiCheat, 500)
 
@@ -116,7 +111,6 @@ socket.on('connect', () => {
 
 // Received a message qhen the client create the room
 socket.on('created', (room, name, difficulty) => {
-    console.log('you\'ve created the room ' + room + ' as user ' + name)
     myUsername = name
     myRoom = room
     myRole = 'beater'
@@ -126,7 +120,6 @@ socket.on('created', (room, name, difficulty) => {
 
 // Received a message qhen the client join the room
 socket.on('joined', (room, name, difficulty) => {
-    console.log('you\'ve joined the room ' + room + ' as user ' + name)
     myUsername = name
     myRoom = room
     myRole = 'bother'
@@ -141,7 +134,6 @@ socket.on('joined', (room, name, difficulty) => {
 // Launch the game when 2 clients are in the room
 socket.on('ready', () => {
     launchGame()
-    console.log('The game begins !!!')
 })
 
 

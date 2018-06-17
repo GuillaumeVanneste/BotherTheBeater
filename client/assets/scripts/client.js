@@ -34,7 +34,6 @@ socket.on("updateBrowser", (currentRooms) => {
                     cell3.innerHTML = 'Medium'
                 }
                 cell4.innerHTML = '<button type="submit" class="waves-effect waves-light btn-small orange modal-trigger" data-target="modal1">Join</button>'
-                console.log("create rooms")
                 const triggerModal = cell4.querySelector('button')
                 triggerModal.addEventListener('mousedown', () => { // Quick join
                     $modalTitle.innerHTML = 'Joining ' + currentRooms[i][0]
