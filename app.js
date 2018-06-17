@@ -32,7 +32,7 @@ app.get('/:room', (req, res) => {
 })
 
 
-server.listen(2000)
+server.listen(process.env.PORT || 2000)
 
 const io = require('socket.io')(server,{})
 

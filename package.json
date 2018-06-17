@@ -1,13 +1,16 @@
 {
-  "name": "projet",
+  "name": "Bother The Beater",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "engines": {
+    "node": "8.11.x"
   },
-  "author": "",
-  "license": "ISC",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Guillaume Vanneste",
+  "license": "MIT",
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
