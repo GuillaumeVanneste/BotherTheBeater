@@ -77,27 +77,27 @@ h1.title {
 
 ********************/
 
-.game .bother.controls {
-    display: none;
-}
-
-.game .malus {
+.game .bother {
     margin-top: 50px;
     margin-right: 50px;
 }
 
-.game .malus p {
+.game .bother .controls {
+    display: none;
+    z-index: 2;
+}
+
+.game .bother p {
     margin-bottom: 15px;
 }
 
-.game .malus button {
+.game .bother button {
     margin-bottom: 10px;
     color: #fff;
     cursor: pointer;
-    z-index: 1;
 }
 
-.game .malus button:disabled {
+.game .bother button:disabled {
     color: grey;
     cursor: default;
 }
@@ -112,25 +112,23 @@ h1.title {
     z-index: 1;
 }
 
-.game audio {
-    z-index: 1;
-}
-
 .game canvas {
     position: absolute;
     top: 0;
     left: 0;
     overflow: hidden;
-    z-index: -5;
+    z-index: -1;
 }
 
+.game span {
+    z-index: 2;
+}
 
 .game .username {
     position: absolute;
     top: 20px;
     left: 50px;
     font-size: 24px;
-
 }
 
 .game .role {

@@ -21,7 +21,7 @@ const particles = []
 // setting variables
 const globalRadius = 25
 const endRadius = 35
-const timeTravel = 0.75
+const timeTravel = (1 / center.x) * 160
 // music variable
 let musicNumber = 0
 // score variables
@@ -32,7 +32,6 @@ let tooLate = 0
 let missed = 0
 // malus variables
 let angle = 0
-let timerSpeed = 10
 
 const musics = [
     [ // First music difficulty = easy

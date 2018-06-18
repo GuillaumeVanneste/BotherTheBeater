@@ -14,9 +14,10 @@ socket.emit('room')
 /**
  * Malus
  */
-const $botherControls = document.querySelector('.bother .controls')
-const $malus = document.querySelector('.malus')
-const $buttons = $malus.querySelectorAll("button")
+const $bother = document.querySelector('.bother')
+const $botherControls = $bother.querySelector('.controls')
+const $buttons = $bother.querySelectorAll("button")
+const $malus = $bother.querySelector('.malus')
 
 const defineRole = () => {
     if(myRole === 'beater') {
@@ -63,7 +64,7 @@ for (let i = 0; i < $buttons.length; i++) {
         window.setInterval(antiCheat, 500)
 
         // Send the malus information to the server
-        socket.emit('malus', malus)
+        socket.emit('malus', malus, myRoom)
     })
 }
 
@@ -83,6 +84,7 @@ socket.on('malus', (malus) => {
             angle += 90
             break
     }
+    console.log('malus')
 })
 
 /**
